@@ -1,10 +1,13 @@
 Package: rusdattendance
-Title: What the Package Does (One Line, Title Case)
+Title: Wrangle Attendance Data from RUSD's Database
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Ben", "Taft", ,
+           "ben.taft@career2cradle.org",
+           role = c("aut", "cre"))
+Description: RUSD's database, currently Infinite Campus, can produce a variety
+    of messily-laid-out files that report on attendance. This package wrangles
+    such files into tidy data.
 License: MIT + file LICENSE
 Suggests: 
     testthat (>= 3.0.0)
@@ -13,3 +16,9 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Imports: 
+    forcats,
+    dplyr,
+    readr,
+    stringr,
+    tidyr

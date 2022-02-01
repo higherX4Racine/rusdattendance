@@ -32,6 +32,12 @@ grade_levels <- stringr::str_pad(
     pad = "0"
 )
 
+#' Read a CSV file with ADM and ADA attendance data
+#'
+#' @param file_name The location of the file
+#'
+#' @return a tibble
+#' @export
 read_adm_ada <- function(file_name) {
     readr::read_csv(file_name,
                     col_names = TRUE,
