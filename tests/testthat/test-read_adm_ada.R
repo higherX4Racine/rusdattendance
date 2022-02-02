@@ -39,6 +39,17 @@ grades_fixture <- function() {
         levels = rusdattendance::grade_levels)
 }
 
+problem_fixture <- function() {
+    tibble::tribble(
+        ~row, ~col, ~expected,            ~actual,
+        4,    NA,   "value in level set", 13
+    ) %>%
+        dplyr::mutate(dplyr::across(row:col,
+                                    as.integer),
+                      dplyr::across(expected:actual,
+                                    as.character))
+}
+
 test_that("nasty data is parsed correctly", {
 
     fh <- system.file("extdata",
@@ -47,6 +58,9 @@ test_that("nasty data is parsed correctly", {
 
     expect_warning(nasty <- read_adm_ada(fh),
                    "1 parsing failure")
+
+    expect_equal(readr::problems(nasty$Grade),
+                 problem_fixture())
     attr(nasty$Grade, "problems") <- NULL
 
     expect_equal(nasty$School, schools_fixture())
