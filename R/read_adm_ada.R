@@ -19,18 +19,14 @@ attendance_columns <- list(
     `Percent In Attendance` = readr::col_number()
 )
 
-grade_levels <- stringr::str_pad(
-    c(
+grade_levels <- c(
         "E3",
         "PK",
         "E4",
         "K4",
         "KG",
         1:12
-    ),
-    width = 2,
-    pad = "0"
-)
+    )
 
 #' Read a CSV file with ADM and ADA attendance data
 #'
@@ -56,8 +52,8 @@ read_adm_ada <- function(file_name) {
             Year = stringr::str_extract(`Calendar Year`,
                                         "(.*)-") %>%
                 readr::parse_number(),
-            Grade = factor(Grade,
-                           levels = grade_levels),
+            Grade = readr::parse_factor(parse_grade_level(Grade),
+                                        levels = grade_levels),
             Tier = forcats::fct_collapse(Grade,
                                          Early = grade_levels[1:4],
                                          Elementary = grade_levels[5 + 0:5],
