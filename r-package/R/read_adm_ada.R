@@ -1,5 +1,4 @@
 # Copyright (C) 2022 by  Higher Expectations for Racine County
-#' @importFrom magrittr %>%
 
 attendance_columns <- list(
     School = readr::col_character(),
@@ -20,6 +19,8 @@ attendance_columns <- list(
     `Percent In Attendance` = readr::col_number()
 )
 
+#' The factor levels that correspond to grades in RUSD
+#' @export
 grade_levels <- c(
         "E3",
         "PK",
@@ -35,6 +36,7 @@ grade_levels <- c(
 #'
 #' @return a tibble
 #' @export
+#' @importFrom magrittr %>%
 read_adm_ada <- function(file_name) {
     readr::read_csv(file_name,
                     col_names = TRUE,
