@@ -2,3 +2,4 @@
 
 export(parse_grade_level)
 export(read_adm_ada)
+importFrom(magrittr,"%>%")

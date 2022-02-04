@@ -1,4 +1,5 @@
 # Copyright (C) 2022 by  Higher Expectations for Racine County
+#' @importFrom magrittr %>%
 
 attendance_columns <- list(
     School = readr::col_character(),

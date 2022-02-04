@@ -19,6 +19,9 @@ RoxygenNote: 7.1.2
 Imports: 
     forcats,
     dplyr,
+    glue,
+    magrittr,
     readr,
     stringr,
+    tibble,
     tidyr
