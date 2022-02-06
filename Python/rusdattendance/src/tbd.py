@@ -36,3 +36,35 @@ def vetted(factor: int) -> int:
     """
 
     return 3 * factor
+
+
+r"""
+def association_table(table_name: str) -> Table:
+    ""Associate a class with the `Label` table.
+
+    Parameters
+    ----------
+    table_name : str
+        The name that the table will have, once it is built.
+
+    Returns
+    -------
+    association_table : sqlalchemy.orm.Table
+        A `Table` with fields that reference the primary keys of two others.
+
+    ""
+
+    return Table(f'{table_name}_labels',
+                 Base.metadata,
+                 Column(f'{table_name}_id',
+                        ForeignKey(f'{table_name}.id'),
+                        primary_key=True),
+                 Column('label_id',
+                        ForeignKey(f'{Label.__tablename__}.id'),
+                        primary_key=True),
+                 )
+
+
+grade_level_labels = association_table('grade_level')
+
+"""
