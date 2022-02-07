@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: rusdattendance
+Version: 0.0.1
+Summary: Work with Demographic and Attendance Data from RUSD
+Home-page: https://github.com/higherX4Racine/rusdattendance
+Author: Ben Taft
+Author-email: ben.taft@career2cradle.org
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# rusdattendance
+
+Parse data files from RUSD's Infinite Campus database and create databases for statistical analysis.
+
