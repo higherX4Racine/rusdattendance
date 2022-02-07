@@ -26,6 +26,9 @@ class Label(Base):
                   unique=True,
                   nullable=False)
 
+    def __repr__(self):
+        return '<Label: "%s">' % self.text
+
 
 #@declarative_mixin
 # class LabeledMixin:

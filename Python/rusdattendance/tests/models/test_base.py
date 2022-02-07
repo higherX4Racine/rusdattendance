@@ -21,3 +21,19 @@ def test_base_initialization(value):
 
     d = Dummy(x=value)
     assert d.x == value
+    assert d.id is None
+
+
+def test_base_sessioning(sql_session_factory):
+    r"""Committing should fill the ID """
+
+    xes = list(range(40, 43))
+    ids = list(range(1, 4))
+
+    with sql_session_factory(Dummy) as session:
+        session.add_all([Dummy(x=x) for x in xes])
+        dummies = session.query(Dummy).order_by(Dummy.id).all()
+
+    for d, x, i in zip(dummies, xes, ids):
+        assert d.x == x
+        assert d.id == i
