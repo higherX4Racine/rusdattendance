@@ -1,6 +1,7 @@
 # Copyright (C) 2022 by Higher Expectations for Racine County
 
 from sqlalchemy import (
+    select,
     Column,
     Integer,
 )
@@ -14,6 +15,13 @@ class Dummy(Base):
     x = Column(Integer)
 
 
+@pytest.fixture(scope='module')
+def dummy_engine(engine):
+    r"""An engine with tables for managing the Dummy model"""
+    engine.add_model_to_engine(Dummy)
+    return engine
+
+
 @pytest.mark.parametrize('value',
                          [1, 2, 3])
 def test_base_initialization(value):
@@ -24,15 +32,17 @@ def test_base_initialization(value):
     assert d.id is None
 
 
-def test_base_sessioning(sql_session_factory):
+def test_base_sessioning(dummy_engine):
     r"""Committing should fill the ID """
 
     xes = list(range(40, 43))
     ids = list(range(1, 4))
 
-    with sql_session_factory(Dummy) as session:
+    statement = select(Dummy).order_by(Dummy.id)
+
+    with dummy_engine.session() as session:
         session.add_all([Dummy(x=x) for x in xes])
-        dummies = session.query(Dummy).order_by(Dummy.id).all()
+        dummies = session.execute(statement).scalars().all()
 
     for d, x, i in zip(dummies, xes, ids):
         assert d.x == x

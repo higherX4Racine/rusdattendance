@@ -30,31 +30,37 @@ class Label(Base):
         return '<Label: "%s">' % self.text
 
 
-#@declarative_mixin
-# class LabeledMixin:
-#     r"""A class that may have multiple text labels for identical instances."""
-#
-#     @declared_attr
-#     def preferred_label(cls):
-#         return Column(Integer,
-#                       ForeignKey('labels.id'))
-#
-#     @declared_attr
-#     def _label_association(cls):
-#         r"""this may need to save the `Table` as a class data member."""
-#         table_name = cls.__tablename__
-#         return Table(f'{table_name}_labels',
-#                      Base.metadata,
-#                      Column(f'{table_name}_id',
-#                             ForeignKey(f'{table_name}.id'),
-#                             primary_key=True),
-#                      Column('label_id',
-#                             ForeignKey(f'{Label.__tablename__}.id'),
-#                             primary_key=True),
-#                      )
-#
-#     @declared_attr
-#     def labels(cls):
-#         r"""I am hoping that this function implicitly saves the association table."""
-#         return relationship('Label',
-#                             secondary=cls._label_association)
+@declarative_mixin
+class LabeledMixin:
+    r"""A class that may have multiple text labels for identical instances."""
+
+    @declared_attr
+    def preferred_label_id(cls):
+        return Column('preferred_label',
+                      ForeignKey(f'{Label.__tablename__}.id'))
+
+    @declared_attr
+    def preferred_label(cls):
+        return relationship(Label,
+                            primaryjoin=lambda: Label.id == cls.preferred_label_id,
+                            lazy='joined')
+
+    @declared_attr
+    def _label_association(cls):
+        r"""this may need to save the `Table` as a class data member."""
+        table_name = cls.__tablename__
+        return Table(f'{table_name}_labels',
+                     Base.metadata,
+                     Column(f'{table_name}_id',
+                            ForeignKey(f'{table_name}.id'),
+                            primary_key=True),
+                     Column('label_id',
+                            ForeignKey(f'{Label.__tablename__}.id'),
+                            primary_key=True),
+                     )
+
+    @declared_attr
+    def labels(cls):
+        r"""I am hoping that this function implicitly saves the association table."""
+        return relationship('Label',
+                            secondary=cls._label_association)
